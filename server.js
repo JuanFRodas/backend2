@@ -61,19 +61,18 @@ app.get("/lista2/:identification", (req, res) => {
 
 //-------------- UPDATE --------------------- //Este metodo no ha sido verificado.
 
-app.put("/lista/:identification", (req, res) => {
+app.put("/lista/:id", (req, res) => {
   const id = req.params.id;
   const { name, last_name, identification, email, phone } = req.body;
 
   conection.query(
-    "UPDATE student SET name = ?, last_name = ?, email = ?, phone = ? WHERE id = ?",
+    "UPDATE student SET name = ?, last_name = ?, identification=?, email = ?, phone = ? WHERE id = ?",
     [name, last_name, identification, email, phone, id],
     (err, result) => {
       if (err) {
-        return res.json({ error: "Error en la consulta" });
+        return res.json({ error: result });
       }
-
-      res.json({ mensaje: "Estudiante actualizado correctamente" });
+      res.json({ mensaje: result });
     }
   );
 });
